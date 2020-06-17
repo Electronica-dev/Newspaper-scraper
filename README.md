@@ -1,3 +1,3 @@
-# Py-projects
+# Py-scripts
 
-Just some python programs and projects I am working on.
+Some basic Py scripts.
