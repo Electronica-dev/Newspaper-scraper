@@ -1,6 +1,6 @@
 # This is a text comparing program. It will return the names of the words which are common in two texts. The reason it's
 # named as tablet is for easy access from the command line.
-# TODO: make a gui for this.
+
 import sys
 
 # text-one and text-two should ALWAYS be enclosed in commas.
