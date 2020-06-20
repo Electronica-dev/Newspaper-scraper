@@ -11,15 +11,14 @@ if len(sys.argv) < 3:
 
 # function to remove comma and 'and'
 def remove(rawText):
-    text = ''.join(rawText.split())
-    replacedAnd = text.replace('and', ',').split(',')
-    return replacedAnd
+    splitText = rawText.replace('and', ',').split(',')
+    List = [ele.strip() for ele in splitText]
+    return List
 
 
 list_one = remove(sys.argv[1])
 list_two = remove(sys.argv[2])
 
-# converting list to set
 set_one = set(list_one)
 set_two = set(list_two)
 num = 0
@@ -38,4 +37,5 @@ while len(set_one.intersection(set_two)) > 0:
     elif len(set_one.intersection(set_two)) == len(set_one):
         print('Medicines are exactly same.')
         break
-print('No common elements.')
+if len(set_one.intersection(set_two)) == 0:
+    print('No common elements.')
