@@ -1,3 +1,4 @@
+# Automate The Boring Stuff Chapter 8 Project - Sandwich Maker
 import pyinputplus as pyip
 
 totalCost = 0
