@@ -5,6 +5,7 @@ from selenium import webdriver
 import requests
 from datetime import date
 import os
+import PDFMerger
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
@@ -102,4 +103,5 @@ for i in range(12, 0, -1):
     filePath.close()
 
 driver.quit()  # Close browser.
-os.startfile(folderPath)  # Open folder.
+
+PDFMerger.merge_pdf_in_folder(folderPath, 'C:/Users/Sammy/Desktop')
