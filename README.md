@@ -1,3 +1,3 @@
 # Py-scripts
 
-Some basic Py scripts.
+Python scripts.
