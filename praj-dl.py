@@ -1,11 +1,22 @@
 
-# Web scraping program to download e-paper from the newspaper provider prajavani.
+# Web scraping program to download e-paper from the newspaper provider Prajavani, and send it to an email. Only
+# supports Edge browser with msedgedriver from Microsoft.
 
 from selenium import webdriver
 import requests
 from datetime import date
-import os
-import PDFMerger
+from os import makedirs
+from os import path
+from PDFMerger import merge_pdf_in_folder
+from send_email import send_email_pdf
+import sys
+from math import ceil
+
+if len(sys.argv) < 2:
+    print('Usage: prajavani-dl.py [recipient-email-address]')
+    sys.exit()
+else:
+    recipientAddress = sys.argv[1:]
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
@@ -68,40 +79,47 @@ def check_size_and_width_middle_pages():
             break
 
 
-# Checking if the download button is enabled.
+# Checking if the download button is enabled, and get the total no. of pages.
 while True:
     downloadEnableCheck = driver.find_element_by_xpath('//*[@id="mainmenu"]/div/ul/li[7]').get_attribute('class')
     if downloadEnableCheck == 'printSaveFeature':
         click_download_button()
+        noOfPages = int(driver.find_element_by_xpath('//*[@id="tpContainer"]/h3/small').get_attribute(
+            'data-pginsection'))
         break
 
 # Load first page.
 open_first_and_last_page()
 
 # Loop to load all the middle pages.
-for i in range(5):
+for i in range(int(ceil(noOfPages - 2) / 2)):
     click_next_button()
     click_download_button()
     check_size_and_width_middle_pages()
 
 # Sequence to load last page.
-click_next_button()
-click_download_button()
-open_first_and_last_page()
+if not noOfPages % 2:
+    click_next_button()
+    click_download_button()
+    open_first_and_last_page()
 
 folderPath = 'C:/Users/Sammy/Desktop/Prajavani ' + dateToday
-os.makedirs(folderPath)  # Make a folder in desktop with today's date.
+makedirs(folderPath)  # Make a folder in desktop with today's date.
 
 # Loop to download pages to the folder.
-for i in range(12, 0, -1):
+for i in range(1, (noOfPages + 1)):
     driver.switch_to.window(driver.window_handles[i])
     res = requests.get(driver.current_url)
     res.raise_for_status()
-    filePath = open(os.path.join(folderPath, str(i) + '.pdf'), 'wb')
+    filePath = open(path.join(folderPath, str(i) + '.pdf'), 'wb')
+    print('Downloading page ' + str(i))
     for chunk in res.iter_content(100000):
         filePath.write(chunk)
     filePath.close()
 
 driver.quit()  # Close browser.
 
-PDFMerger.merge_pdf_in_folder(folderPath, 'C:/Users/Sammy/Desktop')
+merge_pdf_in_folder(folderPath, 'C:/Users/Sammy/Desktop')
+
+send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Prajavani '+dateToday + '.pdf'],
+                      subject='Prajavani Newspaper ' + dateToday)
