@@ -11,8 +11,9 @@ This project has multiple modules written in Python which can be used for differ
    2. requests
    3. PyPDF2
    4. natsort
+   5. lxml
    
-   To install these, run `pip install [module-name]` in the command prompt.
+   To install all of these, run `pip install -r requirements.txt` in the command prompt.
 #### Webdriver Installation
 1. Download the WebDriver from the link. The version you would want to download is the version of your Edge browser. To check your version, type `edge://version/` in the address bar.
 <br/><br/>![About version](../assets/newspaper-scraper/edge-webdriver-download-delay-10ms.gif)
