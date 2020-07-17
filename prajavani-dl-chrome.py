@@ -14,6 +14,8 @@ from send_email import send_email_pdf
 import sys
 from math import ceil
 from time import sleep
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 if len(sys.argv) < 2:
     print('Usage: prajavani-dl-chrome.py [recipient-email-address 1] [recipient-email-address 2] ['
@@ -35,8 +37,7 @@ desired_cap = {
 
 username = environ["SAUCE_USERNAME"]
 access_key = environ["SAUCE_ACCESS_KEY"]
-hub_url = "%s:%s@localhost:4445" % (username, access_key)
-driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor="http://%s/wd/hub" % hub_url)
+driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor=f'https://{username}:{access_key}@ondemand.eu-central-1.saucelabs.com:443/wd/hub')
 
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
