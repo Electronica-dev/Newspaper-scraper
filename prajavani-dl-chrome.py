@@ -29,7 +29,7 @@ desired_cap = {
     'browserName': "Chrome",
     'version': "84",
     'build': "Onboarding Sample App - Python",
-    'name': "1-first-test-Windows-Chrome",
+    'name': "Newspaper-Scraper-Windows-Chrome",
     'tunnel-identifier' = environ['TRAVIS_JOB_NUMBER']
 }
 
