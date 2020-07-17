@@ -14,9 +14,8 @@ addons:
 services:
   - xvfb
 before-script:
-  - wget https://chromedriver.storage.googleapis.com/81.0.4044.138/chromedriver_linux64.zip
+  - wget https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip -d ~/bin
   - google-chrome-stable --no-sandbox --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
-  - xvfb-run make test
   - python3 prajavani-dl-chrome.py srsamartha@gmail.com
