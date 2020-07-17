@@ -9,5 +9,9 @@ install:
 # command to run tests
 addons:
   chrome: stable
+before-script:
+  - wget https://chromedriver.storage.googleapis.com/index.html?path=84.0.4147.30/chromedriver_linux64.zip
+  - unzip chromedriver_linux64.zip -d /home/travis/virtualenv/python3.6/bin/
+  - export CHROME_BIN=chromium-browser
 script:
   - python prajavani-dl-chrome.py srsamartha@gmail.com
