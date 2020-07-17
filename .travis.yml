@@ -8,4 +8,4 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
-  - python praj-dl.py srsamartha@gmail.com
+  - python prajavani-dl-chrome.py srsamartha@gmail.com
