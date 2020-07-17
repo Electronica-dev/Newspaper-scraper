@@ -1,3 +1,4 @@
+sudo: true
 language: python
 python:
   - "3.6"      # current default Python on Travis CI
@@ -13,5 +14,6 @@ install:
 before-script:
   - wget https://chromedriver.storage.googleapis.com/81.0.4044.138/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip -d ~/bin
+  - google-chrome-stable --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
   - python3 prajavani-dl-chrome.py srsamartha@gmail.com
