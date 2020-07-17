@@ -18,5 +18,5 @@ before-script:
   - unzip chromedriver_linux64.zip -d ~/bin
   - google-chrome-stable --no-sandbox --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
-  - xvfb run python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
+  - xvfb-run python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
 #  - python3 prajavani-dl-chrome.py srsamartha@gmail.com
