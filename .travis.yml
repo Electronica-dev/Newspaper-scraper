@@ -1,5 +1,4 @@
 dist: xenial
-sudo: true
 language: python
 python:
   - "3.6"      # current default Python on Travis CI
@@ -11,14 +10,12 @@ install:
  # - sudo apt-get install chromium-browser
 # command to run tests. 
 addons:
-  sauce_connect:
-    username: "Electonica-dev"
-    access_key: "7c412708-04fe-4564-a6df-cfe3a44124f1"
-services:
-  - xvfb
-before-script:
-  - wget https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
-  - unzip chromedriver_linux64.zip -d ~/bin
-  - google-chrome-stable --no-sandbox --disable-gpu --remote-debugging-port=9222 http://localhost &
+  sauce_connect: true
+# services:
+#   - xvfb
+# before-script:
+#   - wget https://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
+#   - unzip chromedriver_linux64.zip -d ~/bin
+#   - google-chrome-stable --no-sandbox --disable-gpu --remote-debugging-port=9222 http://localhost &
 script: #xvfb-run -a python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
   - python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
