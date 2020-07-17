@@ -8,6 +8,7 @@ import requests
 from datetime import date
 from os import makedirs
 from os import path
+from os import environ
 from PDFMerger import merge_pdf_in_folder
 from send_email import send_email_pdf
 import sys
@@ -23,9 +24,19 @@ else:
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
-options = Options()
-options.add_argument('--no-sandbox')
-driver = webdriver.Chrome(options=options)
+desired_cap = {
+    'platform': "Windows 10",
+    'browserName': "Chrome",
+    'version': "84",
+    'build': "Onboarding Sample App - Python",
+    'name': "1-first-test-Windows-Chrome",
+}
+
+username = os.environ["SAUCE_USERNAME"]
+access_key = os.environ["SAUCE_ACCESS_KEY"]
+capabilities["tunnel-identifier"] = os.environ["TRAVIS_JOB_NUMBER"]
+hub_url = "%s:%s@localhost:4445" % (username, access_key)
+driver = webdriver.Remote(desired_capabilities=capabilities, command_executor="http://%s/wd/hub" % hub_url)
 
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
