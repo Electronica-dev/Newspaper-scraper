@@ -37,7 +37,7 @@ desired_cap = {
 
 username = environ["SAUCE_USERNAME"]
 access_key = environ["SAUCE_ACCESS_KEY"]
-driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor=f'https://{username}:{access_key}@ondemand.eu-central-1.saucelabs.com:443/wd/hub')
+driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor='https://{}:{}@ondemand.eu-central-1.saucelabs.com:443/wd/hub'.format(username, access_key))
 
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
