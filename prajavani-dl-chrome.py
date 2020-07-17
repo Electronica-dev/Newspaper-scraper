@@ -36,7 +36,7 @@ username = environ["SAUCE_USERNAME"]
 access_key = environ["SAUCE_ACCESS_KEY"]
 capabilities["tunnel-identifier"] = environ["TRAVIS_JOB_NUMBER"]
 hub_url = "%s:%s@localhost:4445" % (username, access_key)
-driver = webdriver.Remote(desired_capabilities=capabilities, command_executor="http://%s/wd/hub" % hub_url)
+driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor="http://%s/wd/hub" % hub_url)
 
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
