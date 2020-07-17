@@ -3,6 +3,7 @@
 # compatible version.
 
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import requests
 from datetime import date
 from os import makedirs
@@ -22,7 +23,9 @@ else:
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
-driver = webdriver.Chrome()
+options = Options()
+options.add_argument('--no-sandbox')
+driver = webdriver.Chrome(options=options)
 
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
