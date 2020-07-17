@@ -9,11 +9,14 @@ install:
   - pip install -r requirements.txt
   - sudo apt-get install chromium-browser
 # command to run tests
-# addons:
-#   chrome: stable
+addons:
+  chrome: stable
+services:
+  - xvfb
 before-script:
   - wget https://chromedriver.storage.googleapis.com/81.0.4044.138/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip -d ~/bin
-  - google-chrome-stable --disable-gpu --remote-debugging-port=9222 http://localhost &
+  - google-chrome-stable --no-sandbox --disable-gpu --remote-debugging-port=9222 http://localhost &
 script:
+  - xvfb-run make test
   - python3 prajavani-dl-chrome.py srsamartha@gmail.com
