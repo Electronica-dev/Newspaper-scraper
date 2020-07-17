@@ -34,7 +34,6 @@ desired_cap = {
 
 username = environ["SAUCE_USERNAME"]
 access_key = environ["SAUCE_ACCESS_KEY"]
-capabilities["tunnel-identifier"] = environ["TRAVIS_JOB_NUMBER"]
 hub_url = "%s:%s@localhost:4445" % (username, access_key)
 driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor="http://%s/wd/hub" % hub_url)
 
