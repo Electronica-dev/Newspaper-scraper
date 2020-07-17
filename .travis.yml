@@ -13,4 +13,4 @@ before-script:
   - wget http://chromedriver.storage.googleapis.com/2.24/chromedriver_linux64.zip
   - unzip chromedriver_linux64.zip -d ~/bin
 script:
-  - python prajavani-dl-chrome.py srsamartha@gmail.com
+  - python3 prajavani-dl-chrome.py srsamartha@gmail.com
