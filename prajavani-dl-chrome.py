@@ -30,6 +30,7 @@ desired_cap = {
     'version': "84",
     'build': "Onboarding Sample App - Python",
     'name': "1-first-test-Windows-Chrome",
+    'tunnel-identifier' = environ['TRAVIS_JOB_NUMBER']
 }
 
 username = environ["SAUCE_USERNAME"]
