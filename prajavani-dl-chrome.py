@@ -9,13 +9,11 @@ from datetime import date
 from os import makedirs
 from os import path
 from os import environ
-from PDFMerger import merge_pdf_in_folder
-from send_email import send_email_pdf
 import sys
 from math import ceil
 from time import sleep
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+# import urllib3
+# urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 if len(sys.argv) < 2:
     print('Usage: prajavani-dl-chrome.py [recipient-email-address 1] [recipient-email-address 2] ['
@@ -26,19 +24,23 @@ else:
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
-desired_cap = {
-    'platform': "Windows 10",
-    'browserName': "Chrome",
-    'version': "84",
-    'build': "Onboarding Sample App - Python",
-    'name': "Newspaper-Scraper-Windows-Chrome",
-    'tunnel-identifier': environ['TRAVIS_JOB_NUMBER']
-}
+# desired_cap = {
+#     'platform': "Windows 10",
+#     'browserName': "Chrome",
+#     'version': "84",
+#     'build': "Onboarding Sample App - Python",
+#     'name': "Newspaper-Scraper-Windows-Chrome",
+#     'tunnel-identifier': environ['TRAVIS_JOB_NUMBER']
+# }
 
-username = environ["SAUCE_USERNAME"]
-access_key = environ["SAUCE_ACCESS_KEY"]
-driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor='https://{}:{}@ondemand.eu-central-1.saucelabs.com:443/wd/hub'.format(username, access_key))
+# username = environ["SAUCE_USERNAME"]
+# access_key = environ["SAUCE_ACCESS_KEY"]
+# driver = webdriver.Remote(desired_capabilities=desired_cap, command_executor='https://{}:{}@ondemand.eu-central-1.saucelabs.com:443/wd/hub'.format(username, access_key))
 
+options = Options()
+options.add_argument('--no-sandbox')
+
+driver = webdriver.Chrome()
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
 
