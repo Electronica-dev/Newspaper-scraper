@@ -144,8 +144,3 @@ for i in range(1, (noOfPages + 1)):
     filePath.close()
 
 driver.quit()  # Close browser.
-
-merge_pdf_in_folder(folderPath, 'C:/Users/Sammy/Desktop')
-
-send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Prajavani '+dateToday + '.pdf'],
-                      subject='Prajavani Newspaper ' + dateToday)
