@@ -21,7 +21,7 @@ else:
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
-driver = webdriver.Edge()
+driver = webdriver.Edge(executable_path=r'path/to/webdriver')
 
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
