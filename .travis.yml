@@ -7,7 +7,7 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
-  - sudo apt-get install chromium-browser
+#   - sudo apt-get install chromium-browser
 # command to run tests. 
 addons:
 #   sauce_connect: true
@@ -19,5 +19,5 @@ before-script:
   - unzip chromedriver_linux64.zip -d ~/bin
 #   - google-chrome-stable --no-sandbox --disable-gpu --remote-debugging-port=9222 http://localhost &
 script: 
-  - xvfb-run python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
-#   - python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
+#   - xvfb-run python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
+  - python3 prajavani-dl-chrome.py [EMAIL_ADDRESS]
