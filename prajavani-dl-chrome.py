@@ -15,12 +15,12 @@ from time import sleep
 # import urllib3
 # urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-if len(sys.argv) < 2:
-    print('Usage: prajavani-dl-chrome.py [recipient-email-address 1] [recipient-email-address 2] ['
-          'recipient-email-address n]')
-    sys.exit()
-else:
-    recipientAddress = sys.argv[1:]
+# if len(sys.argv) < 2:
+#     print('Usage: prajavani-dl-chrome.py [recipient-email-address 1] [recipient-email-address 2] ['
+#           'recipient-email-address n]')
+#     sys.exit()
+# else:
+#     recipientAddress = sys.argv[1:]
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
