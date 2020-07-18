@@ -19,8 +19,5 @@ This project has multiple modules written in Python which can be used for differ
 <br/><br/>![About version](../assets/newspaper-scraper/edge-webdriver-download-delay-10ms.gif)
 ![Download dialog](../assets/newspaper-scraper/download-dialog.png)
 2. In the zip, there will be a `msedgedriver.exe` file.<br/><br/>![zip folder](../assets/newspaper-scraper/zip-folder.png)
-3. Extract this file to the `Scripts` folder of your Python installation. Usually, this would be located in `%USERPROFILE%\AppData\Local\Programs\Python\Python38-32\Scripts`.
-<br/><br/>![Scripts folder](../assets/newspaper-scraper/script-folder.png)
-4. After this, go to your selenium package, usually located in `%USERPROFILE%\AppData\Local\Programs\Python\Python38-32\Lib\site-packages\selenium`. Then go to `webdriver` -> `edge` -> `webdriver.py` and open this file in an editor.<br/><br/>![Selenium Webdriver.py location](../assets/newspaper-scraper/selenium-webdriver-location.gif)
-5. After opening it, change the `executable_path` from `MicrosoftWebDriver.exe` to `msedgedriver.exe` and save it.<br/><br/>![Change webdriver executable](../assets/newspaper-scraper/change-webdriver.gif)
-### You're all set now!
+3. Extract this to the folder of your choice.
+4. Go to `prajavani-dl-edge.py` and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location.gif)
