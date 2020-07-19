@@ -20,4 +20,4 @@ This project has multiple modules written in Python which can be used for differ
 ![Download dialog](../assets/newspaper-scraper/download-dialog.png)
 2. In the zip, there will be a `msedgedriver.exe` file.`chromedriver.exe` for Chrome.<br/><br/>![zip folder](../assets/newspaper-scraper/zip-folder.png)
 3. Extract this to the folder of your choice.
-4. Go to `prajavani-dl-edge.py` and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location.gif) 
+4. Go to `prajavani-dl-edge.py` and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
