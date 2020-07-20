@@ -131,7 +131,7 @@ for i in range(1, (noOfPages + 1)):
 
 driver.quit()  # Close browser.
 
-merge_pdf_in_folder(folderPath, '#PATH/TO/FOLDER#')
+merge_pdf_in_folder(folderPath, '#PATH/TO/FOLDER#', 'Prajavani ' + dateToday)
 
 rmtree(folderPath)
 
