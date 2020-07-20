@@ -33,6 +33,7 @@ This project has multiple modules written in Python which can be used for differ
    2. requests
    3. lxml
    4. img2pdf
+   5. PyPDF2
    
    To install these, run `pip install requirements-km.txt` in the command prompt.
 ## Usage
