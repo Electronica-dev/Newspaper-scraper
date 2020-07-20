@@ -28,8 +28,7 @@ This project has multiple modules written in Python which can be used for differ
 ### Requirements
 1. [Python interpreter](https://www.ics.uci.edu/~pattis/common/handouts/pythoneclipsejava/python.html) (The latest version at the time of writing this is 3.8.3. But the installation instructions are the same.)
 2. [Chromium based Edge browser](https://www.microsoft.com/en-us/edge) or [Google Chrome](https://www.google.com/intl/en_in/chrome/)
-3. [WebDriver for Edge](https://msedgewebdriverstorage.z22.web.core.windows.net/) or [WebDriver for Chrome](https://chromedriver.storage.googleapis.com/index.html)
-4. Additional modules required
+3. Additional modules required
    1. BeautifulSoup4
    2. requests
    3. lxml
