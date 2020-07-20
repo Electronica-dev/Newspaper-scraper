@@ -7,6 +7,7 @@ import requests
 from datetime import date
 from os import makedirs
 from os import path
+from shutil import rmtree
 from PDFMerger import merge_pdf_in_folder
 from send_email import send_email_pdf
 import sys
@@ -14,14 +15,15 @@ from math import ceil
 from time import sleep
 
 if len(sys.argv) < 2:
-    print('Usage: prajavani-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [recipient-email-address n]')
+    print('''Usage: prajavani-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
+          recipient-email-address n]''')
     sys.exit()
 else:
     recipientAddress = sys.argv[1:]
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
-driver = webdriver.Edge(executable_path=r'path/to/webdriver')
+driver = webdriver.Edge()
 
 driver.get('http://epaper.prajavani.net')  # Base url.
 driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
@@ -90,7 +92,7 @@ while True:
         break
 
 while True:
-    sleep(1.5)
+    sleep(2)
     downloadEnableCheck = driver.find_element_by_xpath('//*[@id="mainmenu"]/div/ul/li[7]').get_attribute('class')
     if downloadEnableCheck == 'printSaveFeature':
         click_download_button()
@@ -129,7 +131,9 @@ for i in range(1, (noOfPages + 1)):
 
 driver.quit()  # Close browser.
 
-merge_pdf_in_folder(folderPath, 'C:/Users/Sammy/Desktop')
+merge_pdf_in_folder(folderPath, 'C:/Users/Sammy/Desktop', 'Prajavani ' + dateToday)
+
+rmtree(folderPath)
 
 send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Prajavani '+dateToday + '.pdf'],
-                      subject='Prajavani Newspaper ' + dateToday)
+               subject='Prajavani Newspaper ' + dateToday)
