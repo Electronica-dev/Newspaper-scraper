@@ -7,6 +7,7 @@ import requests
 from datetime import date
 from os import makedirs
 from os import path
+from shutil import rmtree
 from PDFMerger import merge_pdf_in_folder
 from send_email import send_email_pdf
 import sys
@@ -114,7 +115,7 @@ if not noOfPages % 2:
     click_download_button()
     open_first_and_last_page()
 
-folderPath = 'C:/Users/Sammy/Desktop/Prajavani ' + dateToday
+folderPath = 'PATH/TO/FOLDER/Prajavani ' + dateToday
 makedirs(folderPath)  # Make a folder in desktop with today's date.
 
 # Loop to download pages to the folder.
@@ -130,7 +131,9 @@ for i in range(1, (noOfPages + 1)):
 
 driver.quit()  # Close browser.
 
-merge_pdf_in_folder(folderPath, 'C:/Users/Sammy/Desktop')
+merge_pdf_in_folder(folderPath, '#PATH/TO/FOLDER#')
 
-send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Prajavani '+dateToday + '.pdf'],
+rmtree(folderPath)
+
+send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Prajavani '+dateToday + '.pdf'],
                       subject='Prajavani Newspaper ' + dateToday)
