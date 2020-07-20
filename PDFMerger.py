@@ -13,15 +13,15 @@ dateToday = date.today().strftime("%d-%m-%Y")
 merger = PdfFileMerger()
 
 
-def merge_pdf_in_folder(folder_path, output_path):
+def merge_pdf_in_folder(pdf_folder_path, output_path, file_name):
     print('Creating combined pdf...')
-    pdf_list = listdir(folder_path)
+    pdf_list = listdir(pdf_folder_path)
 
     file = []  # Creating empty list to store the file paths.
 
     # Loop to add folder path to filenames.
     for pdf_file in pdf_list:
-        file.append(folder_path + r'/' + pdf_file)
+        file.append(pdf_folder_path + r'/' + pdf_file)
 
     file = natsorted(file)  # Sorting the file in a numerical order.
 
@@ -29,10 +29,10 @@ def merge_pdf_in_folder(folder_path, output_path):
         merger.append(PDF)
 
     # Opening the file with the name containing today's date.
-    file_path = open(path.join(output_path, 'Prajavani ' + dateToday + '.pdf'), 'wb')
+    file_path = open(path.join(output_path, file_name + '.pdf'), 'wb')
 
     merger.write(file_path)  # Writing to the file.
 
     file_path.close()
     merger.close()
-    print('PDF created at: ' + output_path + '/Prajavani ' + str(dateToday) + '.pdf')
+    print('PDF created at: ' + output_path + '/' + file_name + '.pdf')
