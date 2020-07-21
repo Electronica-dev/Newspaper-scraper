@@ -24,8 +24,8 @@ else:
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
-folderPathImg = 'C:/Users/Sammy/Desktop/Karavali Munjavu ' + dateToday
-folderPathPdf = 'C:/Users/Sammy/Desktop/Karavali Munjavu pdf ' + dateToday
+folderPathImg = 'PATH/TO/FOLDER/Karavali Munjavu ' + dateToday
+folderPathPdf = 'PATH/TO/FOLDER/Karavali Munjavu pdf ' + dateToday
 makedirs(folderPathImg)  # Make a folder in desktop with today's date.
 makedirs(folderPathPdf)
 
@@ -55,9 +55,9 @@ print('Images converted to pdf.')
 
 rmtree(folderPathImg)  # Deleting folder containing images.
 
-merge_pdf_in_folder(folderPathPdf, 'C:/Users/Sammy/Desktop', 'Karavali Munjavu ' + str(dateToday))
+merge_pdf_in_folder(folderPathPdf, '#PATH/TO/FOLDER#', 'Karavali Munjavu ' + str(dateToday))
 
 rmtree(folderPathPdf)  # Deleting folder containing pdfs.
 
-send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Karavali Munjavu '+dateToday + '.pdf'],
+send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Karavali Munjavu '+dateToday + '.pdf'],
                subject='Karavali Munjavu Newspaper ' + dateToday)
