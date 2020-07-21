@@ -16,7 +16,7 @@ from send_email import send_email_pdf
 import sys
 
 if len(sys.argv) < 2:
-    print('''Usage: karavali-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
+    print('''Usage: karavali-dl.py [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]''')
     sys.exit()
 else:
@@ -24,8 +24,8 @@ else:
 
 dateToday = date.today().strftime("%d-%m-%Y")
 
-folderPathImg = 'PATH/TO/FOLDER/Karavali Munjavu ' + dateToday
-folderPathPdf = 'PATH/TO/FOLDER/Karavali Munjavu pdf ' + dateToday
+folderPathImg = 'C:/Users/Sammy/Desktop/Karavali Munjavu ' + dateToday
+folderPathPdf = 'C:/Users/Sammy/Desktop/Karavali Munjavu pdf ' + dateToday
 makedirs(folderPathImg)  # Make a folder in desktop with today's date.
 makedirs(folderPathPdf)
 
@@ -34,24 +34,30 @@ res = get(url)
 res.raise_for_status()
 soup = BeautifulSoup(res.text, 'lxml')
 
+# Downloading images.
 for images in soup.select('img[data-big]'):
-    imgFile = open(path.join(folderPathImg, path.basename(images.get('data-big'))[15:]), 'wb')
+    pageNo = path.basename(images.get('data-big'))[15:]
+    imgFile = open(path.join(folderPathImg, pageNo), 'wb')
     imgDownload = get(url+images.get('data-big'))
+    print(f'Downloading page {pageNo}')
     for chunk in imgDownload.iter_content(100000):
         imgFile.write(chunk)
     imgFile.close()
 
+# Converting images to pdf.
+print('Converting images to pdf')
 for page in listdir(folderPathImg):
     pdf_bytes = convert(Image.open(folderPathImg+'//'+page).filename)
     file = open(path.join(folderPathPdf, page[:-4] + '.pdf'), 'wb')
     file.write(pdf_bytes)
     file.close()
+print('Images converted to pdf.')
 
-rmtree(folderPathImg)
+rmtree(folderPathImg)  # Deleting folder containing images.
 
-merge_pdf_in_folder(folderPathPdf, '#PATH/TO/FOLDER#', 'Karavali Munjavu ' + str(dateToday))
+merge_pdf_in_folder(folderPathPdf, 'C:/Users/Sammy/Desktop', 'Karavali Munjavu ' + str(dateToday))
 
-rmtree(folderPathPdf)
+rmtree(folderPathPdf)  # Deleting folder containing pdfs.
 
-send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Karavali Munjavu '+dateToday + '.pdf'],
+send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Karavali Munjavu '+dateToday + '.pdf'],
                subject='Karavali Munjavu Newspaper ' + dateToday)
