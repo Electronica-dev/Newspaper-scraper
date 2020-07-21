@@ -29,7 +29,8 @@ This project has multiple modules written in Python which can be used for differ
 3. Extract this to the folder of your choice.
 4. Open `prajavani-dl-edge.py` with a text editor and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
 ## Usage
-Open command prompt and enter:<br/>`py prajavani-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
+**Note:** Before you start using this, make sure that you have a valid folder path instead of `PATH/TO/FOLDER` (e.g. Desktop) and that `#PATH/TO/FOLDER#` (e.g. Desktop) are the **SAME** folder.
+<br/>Open command prompt and enter:<br/>`py prajavani-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
 ## Setup (Karavali Munjavu)
 ### Requirements
@@ -44,5 +45,6 @@ Open command prompt and enter:<br/>`py prajavani-dl-edge.py [recipient-email-add
    
    To install these, run `pip install requirements-km.txt` in the command prompt.
 ## Usage
+**Note:** Before you start using this, make sure that you have a valid folder path instead of `PATH/TO/FOLDER` (e.g. Desktop) and that `#PATH/TO/FOLDER#` (e.g. Desktop) are the **SAME** folder.
 Open command prompt and enter:<br/>`py karavali-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
