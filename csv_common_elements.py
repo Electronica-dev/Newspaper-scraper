@@ -36,7 +36,7 @@ class Tablet(QMainWindow):
         self.setCentralWidget(self.widget)
 
         self.add_item_button = QPushButton()
-        self.add_item_button.setIcon(QIcon(r'C:\Users\Sammy\PycharmProjects\python\add.png'))
+        self.add_item_button.setIcon(QIcon(r'add.png'))
         self.add_item_button.setIconSize(QSize(32, 32))
         self.add_item_button.clicked.connect(self.add_item)
 
@@ -46,7 +46,7 @@ class Tablet(QMainWindow):
         self.find_elements.clicked.connect(self.get_common_elements)
 
         self.delete_button = QPushButton()
-        self.delete_button.setIcon(QIcon(r'C:\Users\Sammy\PycharmProjects\python\delete.png'))
+        self.delete_button.setIcon(QIcon(r'delete.png'))
         self.delete_button.setIconSize(QSize(32, 32))
         self.delete_button.hide()
         self.delete_button.clicked.connect(self.close_item)
