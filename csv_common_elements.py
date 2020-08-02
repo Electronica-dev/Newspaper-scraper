@@ -24,7 +24,7 @@ class Tablet(QMainWindow):
         super().__init__()
         self.init_ui()
 
-        self.pattern = re.compile(r', +| +,|,| +and +')
+        self.pattern = re.compile(r' +, |, +| +,|,| +and +')
 
     def init_ui(self):
 
@@ -97,6 +97,7 @@ class Tablet(QMainWindow):
         self.show()
 
     def add_item(self):
+        """This adds QTextEdit() widgets to the Grid Layout"""
 
         self.delete_button.show()
 
@@ -112,6 +113,9 @@ class Tablet(QMainWindow):
             self.add_item_button.setEnabled(False)
 
     def get_common_elements(self):
+        """get_common_elements is the main logic of the program. It gets the texts from the multiple QTextEdit
+        widgets and then passes it to a RegEx pattern which returns individual elements. These individual elements
+        are then compared with each other and the common elements are returned as text to a QLabel."""
 
         self.common_elements_label.show()
         self.common_elements.show()
@@ -138,6 +142,7 @@ class Tablet(QMainWindow):
         arr.clear()
 
     def close_item(self):
+        """Destroys the latest QTextEdit widget."""
 
         self.add_item_button.setEnabled(True)
 
