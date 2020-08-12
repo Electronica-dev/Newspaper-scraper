@@ -1,7 +1,17 @@
 # Newspaper Scraper
 [![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
 <br/>This is a python project that enables you to scrape newspapers from [Prajavani](http://epaper.prajavani.net) and [Karavali Munjavu](http://www.karavalimunjavu.com/). It supports Chromium based Edge and Chrome.
-This project has multiple modules written in Python which can be used for different purposes.
+This project has multiple modules written in Python which can serve different purposes.
+
+- [Setup mail address and application password (Gmail-only)](#setup-mail-address-and-application-password-gmail-only)
+- [Setup (Prajavani)](#setup-prajavani)
+   * [Requirements](#requirements)
+     + [Webdriver Installation](#webdriver-installation)
+   * [Usage](#usage)
+- [Setup (Karavali Munjavu)](#setup-karavali-munjavu)
+   * [Requirements](#requirements-1)
+   * [Usage](#usage-1)
+
 ## Setup mail address and application password (Gmail-only)
 1. The first step is to go to `https://myaccount.google.com/security` and check if you have 2-Step Verification for your google account enabled. If not, then go ahead and enable it.
 2. Then click on App passwords, sign in to your Google account, and in the **Select App** dropdown, select __Other *(Custom Name)*__, and give it a name (e.g. paper-scraper).
@@ -28,7 +38,7 @@ This project has multiple modules written in Python which can be used for differ
 2. In the zip, there will be a `msedgedriver.exe` file.`chromedriver.exe` for Chrome.<br/><br/>![zip folder](../assets/newspaper-scraper/zip-folder.png)
 3. Extract this to the folder of your choice.
 4. Open `prajavani-dl-edge.py` with a text editor and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
-## Usage
+### Usage
 **Note:** Before you start using this, make sure that you have a valid folder path instead of `PATH/TO/FOLDER` (e.g. Desktop) and that `#PATH/TO/FOLDER#` (e.g. Desktop) are the **SAME** folder.
 <br/>Open command prompt and enter:<br/>`py prajavani-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
@@ -44,7 +54,7 @@ This project has multiple modules written in Python which can be used for differ
    5. PyPDF2
    
    To install these, run `pip install requirements-km.txt` in the command prompt.
-## Usage
+### Usage
 **Note:** Before you start using this, make sure that you have a valid folder path instead of `PATH/TO/FOLDER` (e.g. Desktop) and that `#PATH/TO/FOLDER#` (e.g. Desktop) are the **SAME** folder.
 Open command prompt and enter:<br/>`py karavali-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
