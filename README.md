@@ -30,7 +30,7 @@ This project has multiple modules written in Python which can serve different pu
    3. PyPDF2
    4. natsort
    
-   To install these, run `pip install requirements-pv.txt` in the command prompt.
+   To install these, run `pip install -r requirements-pv.txt` in the command prompt.
 #### Webdriver Installation
 1. Download the WebDriver from the link. The version you would want to download is the version of your Edge browser. To check your version, type `edge://version/` or `chrome://version/` in the address bar.
 <br/><br/>![About version](../assets/newspaper-scraper/edge-webdriver-download-delay-10ms.gif)
@@ -53,8 +53,18 @@ This project has multiple modules written in Python which can serve different pu
    4. img2pdf
    5. PyPDF2
    
-   To install these, run `pip install requirements-km.txt` in the command prompt.
+   To install these, run `pip install -r requirements-km.txt` in the command prompt.
 ### Usage
 **Note:** Before you start using this, make sure that you have a valid folder path instead of `PATH/TO/FOLDER` (e.g. Desktop) and that `#PATH/TO/FOLDER#` (e.g. Desktop) are the **SAME** folder.
 Open command prompt and enter:<br/>`py karavali-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
+## Using the GUI
+If you want a more intuitive way to scrape newspapers using an application, then you can make use of the gui program.
+
+### Requirements
+1. [Python interpreter](https://www.ics.uci.edu/~pattis/common/handouts/pythoneclipsejava/python.html) (The latest version at the time of writing this is 3.8.3. But the installation instructions are the same.)
+2. Additional modules required are there in the file requirements.txt. To install these, run `pip install -r requirements.txt` in the command prompt.
+3. You also need to follow [these steps](#setup-mail-address-and-application-password-gmail-only) if sending an email is a priority.
+
+#### Installation
+After you have the above prerequisites, you can run the main program by opening cmd in the folder in which you have all your files in and typing: `py paper_scraper.py`. Or you can make an exe by following [this tutorial](https://www.youtube.com/watch?v=UZX5kH72Yx4).
