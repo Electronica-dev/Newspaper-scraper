@@ -11,7 +11,9 @@ This project has multiple modules written in Python which can serve different pu
 - [Setup (Karavali Munjavu)](#setup-karavali-munjavu)
    * [Requirements](#requirements-1)
    * [Usage](#usage-1)
-
+- [GUI](#using-the-gui)
+   * [Requirements](#requirements-1)
+     * [Usage](#usage-2)
 ## Setup mail address and application password (Gmail-only)
 1. The first step is to go to `https://myaccount.google.com/security` and check if you have 2-Step Verification for your google account enabled. If not, then go ahead and enable it.
 2. Then click on App passwords, sign in to your Google account, and in the **Select App** dropdown, select __Other *(Custom Name)*__, and give it a name (e.g. paper-scraper).
@@ -66,5 +68,5 @@ If you want a more intuitive way to scrape newspapers using an application, then
 2. Additional modules required are there in the file requirements.txt. To install these, run `pip install -r requirements.txt` in the command prompt.
 3. You also need to follow [these steps](#setup-mail-address-and-application-password-gmail-only) if sending an email is a priority.
 
-#### Installation
+#### Usage
 After you have the above prerequisites, you can run the main program by opening cmd in the folder in which you have all your files in and typing: `py paper_scraper.py`. Or you can make an exe by following [this tutorial](https://www.youtube.com/watch?v=UZX5kH72Yx4).
