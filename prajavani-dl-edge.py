@@ -59,7 +59,7 @@ def open_first_and_last_page():
     while True:
         thumbnail_container_width = driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div[3]').size.get(
             'width')
-        if thumbnail_container_width == 141:
+        if thumbnail_container_width == 77:
             click_open_left_page()
             driver.switch_to.window(driver.window_handles[0])
             click_close_button()
@@ -69,11 +69,11 @@ def open_first_and_last_page():
 # Checking if the size is shown and page thumbnail is loaded.
 def check_size_and_width_middle_pages():
     while True:
-        left_thumbnail_container_width = driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div[3]').size.get(
-            'width')
-        right_thumbnail_container_width = driver.find_element_by_xpath('//*[@id="rightPageThumb"]/div/div[3]').size.get(
-            'width')
-        if left_thumbnail_container_width == 141 and right_thumbnail_container_width == 141:
+        left_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div[3]').size.get(
+            'width'))
+        right_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="rightPageThumb"]/div/div[3]').size.get(
+            'width'))
+        if left_thumbnail_container_width == 77 and right_thumbnail_container_width == 77:
             click_open_left_page()
             driver.switch_to.window(driver.window_handles[0])
             click_open_right_page()
@@ -92,9 +92,10 @@ while True:
         break
 
 while True:
-    sleep(2)
     downloadEnableCheck = driver.find_element_by_xpath('//*[@id="mainmenu"]/div/ul/li[7]').get_attribute('class')
-    if downloadEnableCheck == 'printSaveFeature':
+    loadingBar = int(driver.find_element_by_xpath('//*[@id="loadingProgress"]').get_attribute('value'))
+    if downloadEnableCheck == 'printSaveFeature'and loadingBar == 9 and menuWidthCheck == 438:
+        sleep(2)
         click_download_button()
         noOfPages = int(driver.find_element_by_xpath('//*[@id="tpContainer"]/h3/small').get_attribute(
             'data-pginsection'))
