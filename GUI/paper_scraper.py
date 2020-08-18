@@ -14,7 +14,7 @@ class Ui_MainWindow(object):
         
         MainWindow.setObjectName("MainWindow")
         MainWindow.setFixedSize(QtCore.QSize(760, 240))
-        MainWindow.setWindowIcon((QtGui.QIcon('paper.png')))
+        MainWindow.setWindowIcon((QtGui.QIcon('newspaper.ico')))
 
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
