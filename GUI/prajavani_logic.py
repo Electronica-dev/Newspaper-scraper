@@ -99,7 +99,7 @@ class DownloadPrajavani(QThread):
             while True:
                 download_enable_check = driver.find_element_by_xpath('//*[@id="mainmenu"]/div/ul/li[7]').get_attribute('class')
                 loadingBar = int(driver.find_element_by_xpath('//*[@id="loadingProgress"]').get_attribute('value'))
-                if download_enable_check == 'printSaveFeature' and loadingBar == 9 and menuWidthCheck == 438:
+                if download_enable_check == 'printSaveFeature' and loadingBar == 9 and menu_width_check == 438:
                     sleep(2)
                     click_download_button()
                     no_of_pages = int(driver.find_element_by_xpath('//*[@id="tpContainer"]/h3/small').get_attribute(
