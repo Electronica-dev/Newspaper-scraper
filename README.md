@@ -66,6 +66,7 @@ If you want a more intuitive way to scrape newspapers using an application, then
 ### Requirements
 1. [Python interpreter](https://www.ics.uci.edu/~pattis/common/handouts/pythoneclipsejava/python.html) (The latest version at the time of writing this is 3.8.3. But the installation instructions are the same.)
 2. Additional modules required are there in the file requirements.txt. To install these, run `pip install -r requirements.txt` in the command prompt.
+3. [Web Driver (Chrome or Edge)](#webdriver-installation)
 3. You also need to follow [these steps](#setup-mail-address-and-application-password-gmail-only) if sending an email is a priority.
 
 #### Usage
