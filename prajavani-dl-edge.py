@@ -124,8 +124,8 @@ try:
     makedirs(folderPathPartOne)  # Make a folder in desktop with today's date.
     makedirs(folderPathPartTwo)  # Make a folder in desktop with today's date.
 
-    # Loop to download first 6 pages to the folder.
-    for i in range(1, 6):
+    # Loop to download first half of pages to the folder.
+    for i in range(1, int(noOfPages / 2) + 1):
         print('Downloading page ' + str(i))
         driver.switch_to.window(driver.window_handles[i])
         res = requests.get(driver.current_url)
@@ -136,7 +136,7 @@ try:
         filePath.close()
 
     # Loop to download remaining pages to the folder.
-    for i in range(7, (noOfPages + 1)):
+    for i in range(int(noOfPages / 2) + 1, (noOfPages + 1)):
         print('Downloading page ' + str(i))
         driver.switch_to.window(driver.window_handles[i])
         res = requests.get(driver.current_url)
