@@ -1,5 +1,5 @@
 # Newspaper Scraper
-[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)
+[![License: MIT](https://img.shields.io/github/license/Electronica-dev/Newspaper-scraper)](https://opensource.org/licenses/MIT)
 <br/>This is a python project that enables you to scrape newspapers from [Prajavani](http://epaper.prajavani.net) and [Karavali Munjavu](http://www.karavalimunjavu.com/). It supports Chromium based Edge and Chrome.
 This project has multiple modules written in Python which can serve different purposes.
 
