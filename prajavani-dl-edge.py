@@ -9,6 +9,7 @@ from datetime import timedelta
 from os import makedirs
 from os import path
 from os import remove
+from os import environ
 from shutil import rmtree
 from PDFMerger import merge_pdf_in_folder
 from send_email import send_email_pdf
@@ -19,17 +20,25 @@ from time import sleep
 import traceback
 
 if len(argv) < 2:
-    print('''Usage: prajavani-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
+    print('''Usage: prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]''')
     exit()
 else:
-    recipientAddress = argv[1:]
+    pathToDirectory = str(argv[1:2])
+    print(pathToDirectory)
+    recipientAddress = argv[2:]
+    if str.lower(pathToDirectory) == "['desktop']":
+        pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
+        print(pathToDirectory)
+    elif not path.isdir(pathToDirectory):
+        print('The provided directory doesn\'t exist')
+        exit()
 
 dateToday = date.today().strftime("%d-%m-%Y")
 dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
 
-yesterdayFileOne = 'PATH/TO/FOLDER/Prajavani part 1 ' + dateYesterday + '.pdf'
-yesterdayFileTwo = 'PATH/TO/FOLDER/Prajavani part 2 ' + dateYesterday + '.pdf'
+yesterdayFileOne = pathToDirectory + '/Prajavani part 1 ' + dateYesterday + '.pdf'
+yesterdayFileTwo = pathToDirectory + '/Prajavani part 2 ' + dateYesterday + '.pdf'
 
 if path.isfile(yesterdayFileOne):
     remove(yesterdayFileOne)
@@ -126,8 +135,8 @@ try:
         click_download_button()
         open_first_and_last_page()
 
-    folderPathPartOne = 'PATH/TO/FOLDER/Prajavani part 1 ' + dateToday
-    folderPathPartTwo = 'PATH/TO/FOLDER/Prajavani part 2 ' + dateToday
+    folderPathPartOne = pathToDirectory + '/Prajavani part 1 ' + dateToday
+    folderPathPartTwo = pathToDirectory + '/Prajavani part 2 ' + dateToday
     makedirs(folderPathPartOne)  # Make a folder in desktop with today's date.
     makedirs(folderPathPartTwo)  # Make a folder in desktop with today's date.
 
@@ -155,16 +164,16 @@ try:
 
     driver.quit()  # Close browser.
 
-    merge_pdf_in_folder(folderPathPartOne, '#PATH/TO/FOLDER#', 'Prajavani ' + dateToday)
-    merge_pdf_in_folder(folderPathPartTwo, '#PATH/TO/FOLDER#', 'Prajavani ' + dateToday)
+    merge_pdf_in_folder(folderPathPartOne, pathToDirectory, 'Prajavani part 1' + dateToday)
+    merge_pdf_in_folder(folderPathPartTwo, pathToDirectory, 'Prajavani part 2' + dateToday)
 
     rmtree(folderPathPartOne)
     rmtree(folderPathPartTwo)
 
-    send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Prajavani part 1'+dateToday + '.pdf'],
-                   subject='Prajavani Newspaper ' + dateToday)
-    send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Prajavani part 2' + dateToday + '.pdf'],
-                   subject='Prajavani Newspaper ' + dateToday)
+    send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part 1 '+ dateToday + '.pdf'],
+                   subject='Prajavani Newspaper part 1 ' + dateToday)
+    send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part 2 ' + dateToday + '.pdf'],
+                   subject='Prajavani Newspaper part 2 ' + dateToday)
 
 except:
 
