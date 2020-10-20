@@ -41,10 +41,12 @@ This project has multiple modules written in Python which can serve different pu
 3. Extract this to the folder of your choice.
 4. Open `prajavani-dl-edge.py` with a text editor and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
 ### Usage
-**Note:** Before you start using this, make sure that you have a valid folder path instead of `PATH/TO/FOLDER` (e.g. Desktop) and that `#PATH/TO/FOLDER#` (e.g. Desktop) are the **SAME** folder.
-<br/>**Note 2:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.
-<br/>Open command prompt and enter:<br/>`py prajavani-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
+<br/>`py prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
+<br/>Example: `py prajavani-dl-edge.py desktop abc@mail.com def@mail.com`
+<br/>**Note:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.
+<br/>**Note 2:** For the directory location, desktop is the only option available. If you wish to store it in any other location, you will have to explicitly mention the whole path.
+<br/>Example: `py prajavani-dl-edge.py C:/Users/username/New folder abc@mail.com def@mail.com`
 ## Setup (Karavali Munjavu)
 ### Requirements
 1. [Python interpreter](https://www.ics.uci.edu/~pattis/common/handouts/pythoneclipsejava/python.html) (The latest version at the time of writing this is 3.8.3. But the installation instructions are the same.)
