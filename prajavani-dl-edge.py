@@ -5,8 +5,10 @@
 from selenium import webdriver
 import requests
 from datetime import date
+from datetime import timedelta
 from os import makedirs
 from os import path
+from os import remove
 from shutil import rmtree
 from PDFMerger import merge_pdf_in_folder
 from send_email import send_email_pdf
@@ -24,9 +26,18 @@ else:
     recipientAddress = argv[1:]
 
 dateToday = date.today().strftime("%d-%m-%Y")
+dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
+
+yesterdayFileOne = 'PATH/TO/FOLDER/Prajavani part 1 ' + dateYesterday + '.pdf'
+yesterdayFileTwo = 'PATH/TO/FOLDER/Prajavani part 2 ' + dateYesterday + '.pdf'
+
+if path.isfile(yesterdayFileOne):
+    remove(yesterdayFileOne)
+if path.isfile(yesterdayFileTwo):
+    remove(yesterdayFileTwo)
 
 try:
-    driver = webdriver.Edge()
+    driver = webdriver.Edge(executable_path='path/to/webdriver')
 
     driver.get('http://epaper.prajavani.net')  # Base url.
     driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
@@ -70,12 +81,8 @@ try:
     # Checking if the size is shown and page thumbnail is loaded.
     def check_size_and_width_middle_pages():
         while True:
-            left_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div['
-                                                                             '3]').size.get(
-                'width'))
-            right_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="rightPageThumb"]/div/div['
-                                                                            '3]').size.get(
-                'width'))
+            left_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div[3]').size.get('width'))
+            right_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="rightPageThumb"]/div/div[3]').size.get('width'))
             if left_thumbnail_container_width > 77 and right_thumbnail_container_width > 77:
                 click_open_left_page()
                 driver.switch_to.window(driver.window_handles[0])
@@ -119,8 +126,8 @@ try:
         click_download_button()
         open_first_and_last_page()
 
-    folderPathPartOne = 'C:/Users/Sammy/Desktop/Prajavani part 1 ' + dateToday
-    folderPathPartTwo = 'C:/Users/Sammy/Desktop/Prajavani part 2 ' + dateToday
+    folderPathPartOne = 'PATH/TO/FOLDER/Prajavani part 1 ' + dateToday
+    folderPathPartTwo = 'PATH/TO/FOLDER/Prajavani part 2 ' + dateToday
     makedirs(folderPathPartOne)  # Make a folder in desktop with today's date.
     makedirs(folderPathPartTwo)  # Make a folder in desktop with today's date.
 
@@ -148,15 +155,15 @@ try:
 
     driver.quit()  # Close browser.
 
-    merge_pdf_in_folder(folderPathPartOne, 'C:/Users/Sammy/Desktop', 'Prajavani ' + dateToday)
-    merge_pdf_in_folder(folderPathPartTwo, 'C:/Users/Sammy/Desktop', 'Prajavani ' + dateToday)
+    merge_pdf_in_folder(folderPathPartOne, '#PATH/TO/FOLDER#', 'Prajavani ' + dateToday)
+    merge_pdf_in_folder(folderPathPartTwo, '#PATH/TO/FOLDER#', 'Prajavani ' + dateToday)
 
     rmtree(folderPathPartOne)
     rmtree(folderPathPartTwo)
 
-    send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Prajavani part 1'+dateToday + '.pdf'],
+    send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Prajavani part 1'+dateToday + '.pdf'],
                    subject='Prajavani Newspaper ' + dateToday)
-    send_email_pdf(recipientAddress, [r'C:/Users/Sammy/Desktop/Prajavani part 2' + dateToday + '.pdf'],
+    send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Prajavani part 2' + dateToday + '.pdf'],
                    subject='Prajavani Newspaper ' + dateToday)
 
 except:
