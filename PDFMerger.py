@@ -35,4 +35,4 @@ def merge_pdf_in_folder(pdf_folder_path, output_path, file_name):
 
     file_path.close()
     merger.close()
-    print('PDF created at: ' + output_path + '/' + file_name + '.pdf')
+    print('PDF created at: ' + output_path + '\\' + file_name + '.pdf')
