@@ -43,8 +43,8 @@ This project has multiple modules written in Python which can serve different pu
 ### Usage
 `py prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
-<br/>Example: `py prajavani-dl-edge.py desktop abc@mail.com def@mail.com`
-<br/>**Note:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.
+<br/>Example: `py prajavani-dl-edge.py desktop abc@mail.com def@mail.com`<br/>
+<br/>**Note:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.<br/>
 <br/>**Note 2:** For the directory location, desktop is the only option available. If you wish to store it in any other location, you will have to explicitly mention the whole path.
 <br/>Example: `py prajavani-dl-edge.py C:/Users/username/New folder abc@mail.com def@mail.com`
 ## Setup (Karavali Munjavu)
