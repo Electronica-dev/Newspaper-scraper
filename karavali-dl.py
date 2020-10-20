@@ -11,6 +11,7 @@ from os import makedirs
 from os import path
 from os import listdir
 from os import environ
+from os import remove
 from shutil import rmtree
 from img2pdf import convert
 from PDFMerger import merge_pdf_in_folder
@@ -35,6 +36,14 @@ else:
 
 dateToday = date.today().strftime("%d-%m-%Y")
 dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
+
+yesterdayFileOne = pathToDirectory + '/Prajavani part 1 ' + dateYesterday + '.pdf'
+yesterdayFileTwo = pathToDirectory + '/Prajavani part 2 ' + dateYesterday + '.pdf'
+
+if path.isfile(yesterdayFileOne):
+    remove(yesterdayFileOne)
+if path.isfile(yesterdayFileTwo):
+    remove(yesterdayFileTwo)
 
 folderPathImg = pathToDirectory + '/Karavali Munjavu ' + dateToday
 folderPathPdf = pathToDirectory + '/Karavali Munjavu pdf ' + dateToday
