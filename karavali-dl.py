@@ -6,26 +6,38 @@ from requests import get
 from PIL import Image
 from bs4 import BeautifulSoup
 from datetime import date
+from datetime import timedelta
 from os import makedirs
 from os import path
 from os import listdir
+from os import environ
 from shutil import rmtree
 from img2pdf import convert
 from PDFMerger import merge_pdf_in_folder
 from send_email import send_email_pdf
-import sys
+from sys import argv
+from sys import exit
 
-if len(sys.argv) < 2:
-    print('''Usage: karavali-dl.py [recipient-email-address 1] [recipient-email-address 2] [
+if len(argv) < 2:
+    print('''Usage: prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]''')
-    sys.exit()
+    exit()
 else:
-    recipientAddress = sys.argv[1:]
+    pathToDirectory = str(argv[1:2])
+    print(pathToDirectory)
+    recipientAddress = argv[2:]
+    if str.lower(pathToDirectory) == "['desktop']":
+        pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
+        print(pathToDirectory)
+    elif not path.isdir(pathToDirectory):
+        print('The provided directory doesn\'t exist')
+        exit()
 
 dateToday = date.today().strftime("%d-%m-%Y")
+dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
 
-folderPathImg = 'PATH/TO/FOLDER/Karavali Munjavu ' + dateToday
-folderPathPdf = 'PATH/TO/FOLDER/Karavali Munjavu pdf ' + dateToday
+folderPathImg = pathToDirectory + '/Karavali Munjavu ' + dateToday
+folderPathPdf = pathToDirectory + '/Karavali Munjavu pdf ' + dateToday
 makedirs(folderPathImg)  # Make a folder in desktop with today's date.
 makedirs(folderPathPdf)
 
@@ -55,9 +67,9 @@ print('Images converted to pdf.')
 
 rmtree(folderPathImg)  # Deleting folder containing images.
 
-merge_pdf_in_folder(folderPathPdf, '#PATH/TO/FOLDER#', 'Karavali Munjavu ' + str(dateToday))
+merge_pdf_in_folder(folderPathPdf, pathToDirectory, 'Karavali Munjavu ' + str(dateToday))
 
 rmtree(folderPathPdf)  # Deleting folder containing pdfs.
 
-send_email_pdf(recipientAddress, [r'#PATH/TO/FOLDER#/Karavali Munjavu '+dateToday + '.pdf'],
+send_email_pdf(recipientAddress, [pathToDirectory + '/Karavali Munjavu '+dateToday + '.pdf'],
                subject='Karavali Munjavu Newspaper ' + dateToday)
