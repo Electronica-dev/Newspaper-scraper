@@ -41,7 +41,7 @@ This project has multiple modules written in Python which can serve different pu
 3. Extract this to the folder of your choice.
 4. Open `prajavani-dl-edge.py` with a text editor and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
 ### Usage
-<br/>`py prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
+`py prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]`
 <br/>Example: `py prajavani-dl-edge.py desktop abc@mail.com def@mail.com`
 <br/>**Note:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.
