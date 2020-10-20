@@ -41,8 +41,7 @@ This project has multiple modules written in Python which can serve different pu
 3. Extract this to the folder of your choice.
 4. Open `prajavani-dl-edge.py` with a text editor and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
 ### Usage
-`py prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
-          recipient-email-address n]`
+`py prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [recipient-email-address n]`
 <br/>Example: `py prajavani-dl-edge.py desktop abc@mail.com def@mail.com`<br/>
 <br/>**Note:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.<br/>
 <br/>**Note 2:** For the directory location, desktop is the only option available. If you wish to store it in any other location, you will have to explicitly mention the whole path.
@@ -61,8 +60,7 @@ This project has multiple modules written in Python which can serve different pu
    To install these, run `pip install -r requirements-km.txt` in the command prompt.
 ### Usage
 **Note:** Before you start using this, make sure that you have a valid folder path instead of `PATH/TO/FOLDER` (e.g. Desktop) and that `#PATH/TO/FOLDER#` (e.g. Desktop) are the **SAME** folder.
-Open command prompt and enter:<br/>`py karavali-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [
-          recipient-email-address n]`
+Open command prompt and enter:<br/>`py karavali-dl-edge.py [recipient-email-address 1] [recipient-email-address 2] [recipient-email-address n]`
 ## Using the GUI
 If you want a more intuitive way to scrape newspapers using an application, then you can make use of the gui program.
 
