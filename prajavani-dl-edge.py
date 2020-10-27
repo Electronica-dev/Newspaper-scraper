@@ -19,14 +19,14 @@ from math import ceil
 from time import sleep
 import traceback
 
-if len(argv) < 2:
-    print('''Usage: prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
+if len(argv) < 4:
+    print('''Usage: prajavani-dl-edge.py [directory-location] [file-size] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]''')
     exit()
 else:
-    pathToDirectory = str(argv[1:2])
-    print(pathToDirectory)
-    recipientAddress = argv[2:]
+    pathToDirectory = str(argv[1])
+    size = int(argv[2])
+    recipientAddress = argv[3:]
     if str.lower(pathToDirectory) == "['desktop']":
         pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
         print(pathToDirectory)
@@ -135,45 +135,40 @@ try:
         click_download_button()
         open_first_and_last_page()
 
-    folderPathPartOne = pathToDirectory + '/Prajavani part 1 ' + dateToday
-    folderPathPartTwo = pathToDirectory + '/Prajavani part 2 ' + dateToday
-    makedirs(folderPathPartOne)  # Make a folder in desktop with today's date.
-    makedirs(folderPathPartTwo)  # Make a folder in desktop with today's date.
+    total_file_size = 0
+    page_no = 1
+    folderNo = 1
 
-    # Loop to download first half of pages to the folder.
-    for i in range(1, int(noOfPages / 2) + 1):
-        print('Downloading page ' + str(i))
-        driver.switch_to.window(driver.window_handles[i])
+    folderPath = pathToDirectory + '/Prajavani part ' + str(folderNo) + ' ' + dateToday #  Initial folder path with today's date.
+    makedirs(folderPath)  # Make that folder.
+
+    while(page_no <= noOfPages):
+
+        if (size != 0 and total_file_size > (size * 1000000)):
+            total_file_size = 0
+            folderNo += 1
+            folderPath = pathToDirectory + '/Prajavani part ' + str(folderNo) + ' ' + dateToday
+            makedirs(folderPath)
+
+        print('Downloading page ' + str(page_no))
+        driver.switch_to.window(driver.window_handles[page_no])
         res = requests.get(driver.current_url)
         res.raise_for_status()
-        filePath = open(path.join(folderPathPartOne, str(i) + '.pdf'), 'wb')
+        file_size = int(res.headers.get('Content-Length', None))
+        total_file_size += file_size
+        filePath = open(path.join(folderPath, str(page_no) + '.pdf'), 'wb')
         for chunk in res.iter_content(100000):
             filePath.write(chunk)
         filePath.close()
-
-    # Loop to download remaining pages to the folder.
-    for i in range(int(noOfPages / 2) + 1, (noOfPages + 1)):
-        print('Downloading page ' + str(i))
-        driver.switch_to.window(driver.window_handles[i])
-        res = requests.get(driver.current_url)
-        res.raise_for_status()
-        filePath = open(path.join(folderPathPartTwo, str(i) + '.pdf'), 'wb')
-        for chunk in res.iter_content(100000):
-            filePath.write(chunk)
-        filePath.close()
+        page_no += 1
 
     driver.quit()  # Close browser.
 
-    merge_pdf_in_folder(folderPathPartOne, pathToDirectory, 'Prajavani part 1' + dateToday)
-    merge_pdf_in_folder(folderPathPartTwo, pathToDirectory, 'Prajavani part 2' + dateToday)
-
-    rmtree(folderPathPartOne)
-    rmtree(folderPathPartTwo)
-
-    send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part 1 '+ dateToday + '.pdf'],
-                   subject='Prajavani Newspaper part 1 ' + dateToday)
-    send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part 2 ' + dateToday + '.pdf'],
-                   subject='Prajavani Newspaper part 2 ' + dateToday)
+    for i in range(folderNo):
+        merge_pdf_in_folder((pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday), pathToDirectory, 'Prajavani part ' + str(i + 1) + ' ' + dateToday)
+        rmtree(pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday)
+        send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part '+ str(i + 1) + dateToday + '.pdf'],
+                    subject='Prajavani Newspaper part ' + str(i + 1) + dateToday)
 
 except:
 
