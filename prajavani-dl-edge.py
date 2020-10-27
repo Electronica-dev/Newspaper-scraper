@@ -27,7 +27,7 @@ else:
     pathToDirectory = str(argv[1])
     size = int(argv[2])
     recipientAddress = argv[3:]
-    if str.lower(pathToDirectory) == "['desktop']":
+    if str.lower(pathToDirectory) == 'desktop':
         pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
         print(pathToDirectory)
     elif not path.isdir(pathToDirectory):
