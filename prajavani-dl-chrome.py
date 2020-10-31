@@ -11,25 +11,32 @@ from os import path
 from os import remove
 from os import environ
 from shutil import rmtree
-from PDFMerger import merge_pdf_in_folder
-from send_email import send_email_pdf
+from pathlib import Path
 from sys import exit
 from sys import argv
 from math import ceil
 from time import sleep
 import traceback
+from PDFMerger import merge_pdf_in_folder
+from send_email import send_email_pdf
 
 if len(argv) < 4:
-    print('''Usage: prajavani-dl-edge.py [directory-location] [file-size] [recipient-email-address 1] [recipient-email-address 2] [
+    print('''Usage: prajavani-dl-edge.py [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]''')
     exit()
 else:
     pathToDirectory = str(argv[1])
     size = int(argv[2])
-    recipientAddress = argv[3:]
+    sendMail = int(argv[3])
+    if (sendMail == 1 and len(argv) > 4):
+        recipientAddress = argv[4:]
+    else:
+        print('No receipient emails provided.')
+        print('''Usage: prajavani-dl-edge.py [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
+          recipient-email-address n]''')
+        exit()
     if str.lower(pathToDirectory) == 'desktop':
         pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
-        print(pathToDirectory)
     elif not path.isdir(pathToDirectory):
         print('The provided directory doesn\'t exist')
         exit()
@@ -37,13 +44,12 @@ else:
 dateToday = date.today().strftime("%d-%m-%Y")
 dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
 
-yesterdayFileOne = pathToDirectory + '/Prajavani part 1 ' + dateYesterday + '.pdf'
-yesterdayFileTwo = pathToDirectory + '/Prajavani part 2 ' + dateYesterday + '.pdf'
+yesterdayFilePath = Path(pathToDirectory)
+yesterdayFileList = list(yesterdayFilePath.glob('Prajavani part ? ' + dateYesterday + '.pdf'))
 
-if path.isfile(yesterdayFileOne):
-    remove(yesterdayFileOne)
-if path.isfile(yesterdayFileTwo):
-    remove(yesterdayFileTwo)
+for file in yesterdayFileList:
+    if(path.isfile(file)):
+        remove(file)
 
 try:
     driver = webdriver.Chrome(executable_path='path/to/webdriver')
