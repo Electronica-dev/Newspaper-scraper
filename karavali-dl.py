@@ -42,13 +42,10 @@ else:
 dateToday = date.today().strftime("%d-%m-%Y")
 dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
 
-yesterdayFileOne = pathToDirectory + '/Prajavani part 1 ' + dateYesterday + '.pdf'
-yesterdayFileTwo = pathToDirectory + '/Prajavani part 2 ' + dateYesterday + '.pdf'
+yesterdayFile = pathToDirectory + '/Karavali Munjavu ' + dateYesterday
 
-if path.isfile(yesterdayFileOne):
-    remove(yesterdayFileOne)
-if path.isfile(yesterdayFileTwo):
-    remove(yesterdayFileTwo)
+if path.isfile(yesterdayFile):
+    remove(yesterdayFile)
 
 folderPathImg = pathToDirectory + '/Karavali Munjavu ' + dateToday
 folderPathPdf = pathToDirectory + '/Karavali Munjavu pdf ' + dateToday
