@@ -52,7 +52,7 @@ for file in yesterdayFileList:
         remove(file)
 
 try:
-    driver = webdriver.Edge()
+    driver = webdriver.Edge(executable_path='path/to/webdriver')
 
     driver.get('http://epaper.prajavani.net')  # Base url.
     driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
