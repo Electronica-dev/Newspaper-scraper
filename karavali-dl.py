@@ -20,15 +20,21 @@ from sys import argv
 from sys import exit
 
 if len(argv) < 3:
-    print('''Usage: prajavani-dl-edge.py [directory-location] [recipient-email-address 1] [recipient-email-address 2] [
+    print('''Usage: prajavani-dl-edge.py [directory-location] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]''')
     exit()
 else:
     pathToDirectory = str(argv[1])
-    recipientAddress = argv[2:]
+    sendMail = int(argv[2])
+    if (sendMail == 1 and len(argv) > 3):
+        recipientAddress = argv[3:]
+    else:
+        print('No receipient emails provided.')
+        print('''Usage: prajavani-dl-edge.py [directory-location] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
+          recipient-email-address n]''')
+        exit()
     if str.lower(pathToDirectory) == 'desktop':
         pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
-        print(pathToDirectory)
     elif not path.isdir(pathToDirectory):
         print('The provided directory doesn\'t exist')
         exit()
@@ -85,7 +91,8 @@ try:
 
     rmtree(folderPathPdf)  # Deleting folder containing pdfs.
 
-    send_email_pdf(recipientAddress, [pathToDirectory + '/Karavali Munjavu '+ dateToday + '.pdf'],
+    if (sendMail == 1):
+        send_email_pdf(recipientAddress, [pathToDirectory + '/Karavali Munjavu '+ dateToday + '.pdf'],
                    subject='Karavali Munjavu Newspaper ' + dateToday)
 
 except:
