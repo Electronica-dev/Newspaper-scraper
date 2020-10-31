@@ -11,25 +11,32 @@ from os import path
 from os import remove
 from os import environ
 from shutil import rmtree
-from PDFMerger import merge_pdf_in_folder
-from send_email import send_email_pdf
+from pathlib import Path
 from sys import exit
 from sys import argv
 from math import ceil
 from time import sleep
 import traceback
+from PDFMerger import merge_pdf_in_folder
+from send_email import send_email_pdf
 
 if len(argv) < 4:
-    print('''Usage: prajavani-dl-edge.py [directory-location] [file-size] [recipient-email-address 1] [recipient-email-address 2] [
+    print('''Usage: prajavani-dl-edge.py [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
           recipient-email-address n]''')
     exit()
 else:
     pathToDirectory = str(argv[1])
     size = int(argv[2])
-    recipientAddress = argv[3:]
+    sendMail = int(argv[3])
+    if (sendMail == 1 and len(argv) > 4):
+        recipientAddress = argv[4:]
+    else:
+        print('No receipient emails provided.')
+        print('''Usage: prajavani-dl-edge.py [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
+          recipient-email-address n]''')
+        exit()
     if str.lower(pathToDirectory) == 'desktop':
         pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
-        print(pathToDirectory)
     elif not path.isdir(pathToDirectory):
         print('The provided directory doesn\'t exist')
         exit()
@@ -37,16 +44,15 @@ else:
 dateToday = date.today().strftime("%d-%m-%Y")
 dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
 
-yesterdayFileOne = pathToDirectory + '/Prajavani part 1 ' + dateYesterday + '.pdf'
-yesterdayFileTwo = pathToDirectory + '/Prajavani part 2 ' + dateYesterday + '.pdf'
+yesterdayFilePath = Path(pathToDirectory)
+yesterdayFileList = list(yesterdayFilePath.glob('Prajavani part ? ' + dateYesterday + '.pdf'))
 
-if path.isfile(yesterdayFileOne):
-    remove(yesterdayFileOne)
-if path.isfile(yesterdayFileTwo):
-    remove(yesterdayFileTwo)
+for file in yesterdayFileList:
+    if(path.isfile(file)):
+        remove(file)
 
 try:
-    driver = webdriver.Edge(executable_path='path/to/webdriver')
+    driver = webdriver.Edge()
 
     driver.get('http://epaper.prajavani.net')  # Base url.
     driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
@@ -90,8 +96,12 @@ try:
     # Checking if the size is shown and page thumbnail is loaded.
     def check_size_and_width_middle_pages():
         while True:
-            left_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div[3]').size.get('width'))
-            right_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="rightPageThumb"]/div/div[3]').size.get('width'))
+            left_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div['
+                                                                             '3]').size.get(
+                'width'))
+            right_thumbnail_container_width = int(driver.find_element_by_xpath('//*[@id="rightPageThumb"]/div/div['
+                                                                            '3]').size.get(
+                'width'))
             if left_thumbnail_container_width > 77 and right_thumbnail_container_width > 77:
                 click_open_left_page()
                 driver.switch_to.window(driver.window_handles[0])
@@ -147,7 +157,7 @@ try:
         if (size != 0 and total_file_size > (size * 1000000)):
             total_file_size = 0
             folderNo += 1
-            folderPath = pathToDirectory + '/Prajavani part ' + str(folderNo) + ' ' + dateToday
+            folderPath = pathToDirectory + '/Prajavani part ' + str(folderNo) + ' ' + dateToday # Make a new folder as and when required.
             makedirs(folderPath)
 
         print('Downloading page ' + str(page_no))
@@ -164,11 +174,12 @@ try:
 
     driver.quit()  # Close browser.
 
-    for i in range(folderNo):
+    for i in reversed(range(folderNo)):
         merge_pdf_in_folder((pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday), pathToDirectory, 'Prajavani part ' + str(i + 1) + ' ' + dateToday)
         rmtree(pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday)
-        send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part '+ str(i + 1) + dateToday + '.pdf'],
-                    subject='Prajavani Newspaper part ' + str(i + 1) + dateToday)
+        if (sendMail == 1):
+            send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part '+ str(i + 1) + ' ' + dateToday + '.pdf'],
+                    subject='Prajavani Newspaper part ' + str(i + 1) + ' ' + dateToday)
 
 except:
 
