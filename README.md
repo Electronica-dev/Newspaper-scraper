@@ -19,7 +19,7 @@ This project has multiple modules written in Python which can serve different pu
 2. Then click on App passwords, sign in to your Google account, and in the **Select App** dropdown, select __Other *(Custom Name)*__, and give it a name (e.g. paper-scraper).
 3. Click on Generate.
 4. You will get your 12-digit application password.<br/><br/>![Creating-app-password](../assets/newspaper-scraper/paper-scraper.gif)<br/><br/>
-5. If you are the only user of your computer, you may add your mail address and the application password directly to `email = environ.get('EMAIL_ADDRESS')` as `email = 'your-email'` `pwd = environ.get('EMAIL_PASSWORD')` as `pwd = '12-digit-password'`.
+5. If you are the only user of your computer, you may add your mail address and the application password directly to `email = environ.get('EMAIL_ADDRESS')` as `email = 'your-email'` `pwd = environ.get('EMAIL_PASSWORD')` as `pwd = '12-digit-password'` in the `send_email.py` module.
 6. If you have multiple users who have access to your computer, and you are the administrator, you can store your mail address and application password as [environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). If you choose to do so, be sure to specify your mail address variable name as `EMAIL_ADDRESS` and your application password variable name as `EMAIL_PASSWORD`.
 ## Setup (Prajavani) 
 ### Requirements
@@ -45,7 +45,7 @@ This project has multiple modules written in Python which can serve different pu
 <br/>Example: `py prajavani-dl-edge.py desktop 8 1 abc@mail.com def@mail.com`<br/>
 <br/>**Note:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.<br/>
 <br/>**Note 2:** For the directory location, desktop is the only option available. If you wish to store it in any other location, you will have to explicitly mention the whole path.
-<br/>File size is in megabytes, if you give it as 8, the program will automatically split the individual file to 8 mb. If you wish to have a single file, then give it a value of 0.
+<br/>File size is in megabytes, if you give it as 8, the program will automatically split the individual file(s) to 8 mb. If you wish to have a single file, then give it a value of 0.
 <br/>If you don't want to send a mail, you may change the 1 to a 0 and not provide any mail.
 ## Setup (Karavali Munjavu)
 ### Requirements
