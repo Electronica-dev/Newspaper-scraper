@@ -19,7 +19,7 @@ This project has multiple modules written in Python which can serve different pu
 2. Then click on App passwords, sign in to your Google account, and in the **Select App** dropdown, select __Other *(Custom Name)*__, and give it a name (e.g. paper-scraper).
 3. Click on Generate.
 4. You will get your 12-digit application password.<br/><br/>![Creating-app-password](../assets/newspaper-scraper/paper-scraper.gif)<br/><br/>
-5. If you are the only user of your computer, you may add your mail address and the application password directly to `email = environ.get('EMAIL_ADDRESS')` as `email = 'your-email'` `pwd = environ.get('EMAIL_PASSWORD')` as `pwd = '12-digit-password'` in the `send_email.py` module.
+5. If you are the only user of your computer, you may add your mail address and the application password directly to `email = environ.get('EMAIL_ADDRESS')` as `email = 'your-email'` and `pwd = environ.get('EMAIL_PASSWORD')` as `pwd = '12-digit-password'` in the `send_email.py` module.
 6. If you have multiple users who have access to your computer, and you are the administrator, you can store your mail address and application password as [environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). If you choose to do so, be sure to specify your mail address variable name as `EMAIL_ADDRESS` and your application password variable name as `EMAIL_PASSWORD`.
 ## Setup (Prajavani) 
 ### Requirements
