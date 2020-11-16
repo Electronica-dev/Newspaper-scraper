@@ -39,12 +39,13 @@ This project has multiple modules written in Python which can serve different pu
 ![Download dialog](../assets/newspaper-scraper/download-dialog.png)
 2. In the zip, there will be a `msedgedriver.exe` file.`chromedriver.exe` for Chrome.<br/><br/>![zip folder](../assets/newspaper-scraper/zip-folder.png)
 3. Extract this to the folder of your choice.
-4. Open `prajavani-dl-edge.py` with a text editor and replace `path/to/webdriver` with the path your `msedgedriver.exe` is located in. Or, go to `prajavani-dl-chrome.py` and do the same.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
+4. Open `prajavani-dl.py` with a text editor and replace `path/to/webdriver` with the path `msedgedriver.exe` or `chromewebdriver.exe` is located in. You actually need only one for your preferred browser. It doesn't matter if you leave the other one as `path/to/webdriver` itself as long as you choose your browser.<br/><br/>![Webdriver-path-change](../assets/newspaper-scraper/change-webdriver-location-small.gif) 
 ### Usage
-`py prajavani-dl-edge.py [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [recipient-email-address n]`
-<br/>Example: `py prajavani-dl-edge.py desktop 8 1 abc@mail.com def@mail.com`<br/>
-<br/>**Note:** You will need to update the webdriver as and when you update Edge, as it is not forward compatible.<br/>
-<br/>**Note 2:** For the directory location, desktop is the only option available. If you wish to store it in any other location, you will have to explicitly mention the whole path.
+`py prajavani-dl.py [browser] [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [recipient-email-address n]`
+<br/>Example: `py prajavani-dl.py c desktop 8 1 abc@mail.com def@mail.com`<br/>
+<br/>**Note:** You will need to update the webdriver as and when you update Edge or Chrome, as it is not forward compatible.
+<br/>**Note 2:** For the directory location; desktop, documents and downloads are the only options available. If you wish to store it in any other location, you will have to explicitly mention the whole path.
+<br/>**Note 3:** To give the browser choice, either type c for chrome or e for edge.
 <br/>File size is in megabytes, if you give it as 8, the program will automatically split the individual file(s) to 8 mb. If you wish to have a single file, then give it a value of 0.
 <br/>If you don't want to send a mail, you may change the 1 to a 0 and not provide any mail.
 ## Setup (Karavali Munjavu)
