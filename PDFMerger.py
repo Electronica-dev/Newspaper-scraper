@@ -10,10 +10,10 @@ from natsort import natsorted
 # Get date in a recognizable format.
 dateToday = date.today().strftime("%d-%m-%Y")
 
-merger = PdfFileMerger()
-
-
 def merge_pdf_in_folder(pdf_folder_path, output_path, file_name):
+
+    merger = PdfFileMerger()
+
     print('Creating combined pdf...')
     pdf_list = listdir(pdf_folder_path)
 
