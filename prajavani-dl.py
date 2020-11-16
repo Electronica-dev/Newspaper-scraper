@@ -60,9 +60,9 @@ for file in yesterdayFileList:
 
 try:
     if (browser.lower() == 'c'):
-        driver = webdriver.Chrome(executable_path='path/to/webdriver')
+        driver = webdriver.Chrome()
     elif (browser.lower() == 'e'):
-        driver = webdriver.Edge(executable_path='path/to/webdriver')
+        driver = webdriver.Edge()
 
     driver.get('http://epaper.prajavani.net')  # Base url.
     driver.maximize_window()  # Maximizing window, else the downloadButton element won't be click-able.
