@@ -1,6 +1,6 @@
 
 # Web scraping program to download e-paper from the newspaper provider Prajavani, and send it to an email. Chrome
-# compatible version.
+# and Edge compatible version.
 
 from selenium import webdriver
 import requests
@@ -27,8 +27,7 @@ if len(argv) < 5:
     exit()
 else:
     browser = str(argv[1])
-    print(browser)
-    if(browser != 'c' and 'e'):
+    if(browser != 'c' and browser != 'e'):
         print('Invalid browser')
         exit()
     pathToDirectory = str(argv[2])
@@ -194,7 +193,8 @@ try:
     for i in range(folderNo):
         merge_pdf_in_folder((pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday), pathToDirectory, 'Prajavani part ' + str(i + 1) + ' ' + dateToday)
         rmtree(pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday)
-        send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part '+ str(i + 1) + dateToday + '.pdf'],
+        if (sendMail == 1):
+            send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part '+ str(i + 1) + dateToday + '.pdf'],
                     subject='Prajavani Newspaper part ' + str(i + 1) + dateToday)
 
 except:
