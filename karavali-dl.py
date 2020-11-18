@@ -1,11 +1,12 @@
 
-# Web scraping program to download e-paper from the newspaper provider Karavali Munjavu, and send it to an email. Edge compatible version.
+# Web scraping program to download e-paper from the newspaper provider Karavali Munjavu, and send it to an email.
 
 from requests import get
 from PIL import Image
 from bs4 import BeautifulSoup
 from datetime import date
 from datetime import timedelta
+from argparse import ArgumentParser
 from os import makedirs
 from os import path
 from os import listdir
@@ -19,33 +20,33 @@ from send_email import send_email_pdf
 from sys import argv
 from sys import exit
 
-if len(argv) < 3:
-    print('''Usage: prajavani-dl-edge.py [directory-location] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
-          recipient-email-address n]''')
-    exit()
-else:
-    pathToDirectory = str(argv[1])
-    sendMail = int(argv[2])
-    if (sendMail == 1 and len(argv) > 3):
-        recipientAddress = argv[3:]
-    else:
-        print('No receipient emails provided.')
-        print('''Usage: prajavani-dl-edge.py [directory-location] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
-          recipient-email-address n]''')
-        exit()
-    if str.lower(pathToDirectory) == 'desktop':
-        pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
-    elif not path.isdir(pathToDirectory):
-        print('The provided directory doesn\'t exist')
-        exit()
+parser = ArgumentParser()
+parser.add_argument("--directory", "-d", help = "choose directory location (desktop, documents, downloads or your own)", 
+default='desktop', type=str.lower)
+parser.add_argument("--mail", "-m", help="send mail", nargs='+')
+parser.add_argument("--delete", "-del", help="delete previous day's files", action='store_true')
+args = parser.parse_args()
+
+pathToDirectory = args.directory
+recipientAddress = args.mail
+
+if pathToDirectory == 'desktop':
+    pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
+elif pathToDirectory == 'documents':
+    pathToDirectory = path.join(environ['USERPROFILE'], 'Documents')
+elif pathToDirectory == 'downloads':
+    pathToDirectory = path.join(environ['USERPROFILE'], 'Downloads')
+elif not path.isdir(pathToDirectory):
+    print('Folder/path does not exist')
+
+if args.delete:
+    dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
+    yesterdayFile = pathToDirectory + '/Karavali Munjavu ' + dateYesterday
+
+    if path.isfile(yesterdayFile):
+        remove(yesterdayFile)
 
 dateToday = date.today().strftime("%d-%m-%Y")
-dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
-
-yesterdayFile = pathToDirectory + '/Karavali Munjavu ' + dateYesterday
-
-if path.isfile(yesterdayFile):
-    remove(yesterdayFile)
 
 folderPathImg = pathToDirectory + '/Karavali Munjavu ' + dateToday
 folderPathPdf = pathToDirectory + '/Karavali Munjavu pdf ' + dateToday
@@ -88,7 +89,7 @@ try:
 
     rmtree(folderPathPdf)  # Deleting folder containing pdfs.
 
-    if (sendMail == 1):
+    if recipientAddress:
         send_email_pdf(recipientAddress, [pathToDirectory + '/Karavali Munjavu '+ dateToday + '.pdf'],
                    subject='Karavali Munjavu Newspaper ' + dateToday)
 
