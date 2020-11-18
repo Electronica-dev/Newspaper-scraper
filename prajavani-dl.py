@@ -5,6 +5,8 @@
 from selenium import webdriver
 import requests
 import re
+from argparse import ArgumentParser
+from argparse import ArgumentTypeError
 from datetime import date
 from datetime import timedelta
 from os import makedirs
@@ -21,42 +23,43 @@ import traceback
 from PDFMerger import merge_pdf_in_folder
 from send_email import send_email_pdf
 
-if len(argv) < 5:
-    print('''Usage: prajavani-dl-edge.py [browser] [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [
-          recipient-email-address n]''')
-    exit()
-else:
-    browser = str(argv[1])
-    if(browser != 'c' and browser != 'e'):
-        print('Invalid browser')
-        exit()
-    pathToDirectory = str(argv[2])
-    size = int(argv[3])
-    sendMail = int(argv[4])
-    if (sendMail == 1 and len(argv) > 5):
-        recipientAddress = argv[5:]
-    elif (sendMail == 1 and len(argv) <= 5):
-        print('No email recipients provided')
-        exit()
-    if pathToDirectory.lower() == 'desktop':
-        pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
-    elif pathToDirectory.lower() == 'documents':
-        pathToDirectory = path.join(environ['USERPROFILE'], 'Documents')
-    elif pathToDirectory.lower() == 'downloads':
-        pathToDirectory = path.join(environ['USERPROFILE'], 'Downloads')
-    elif not path.isdir(pathToDirectory):
-        print('The provided directory doesn\'t exist')
-        exit()
+parser = ArgumentParser()
+parser.add_argument("browser", help="choose your preferred browser (c for Chrome and e for Edge)", choices=['c', 'e', 'C', 'E'])
+parser.add_argument("--directory", "-d", help = "choose directory location (desktop, documents, downloads or your own)", default='desktop', type=str.lower)
+def check_positive(value):
+    val = int(value)
+    if val < 0:
+        raise ArgumentTypeError("Invalid size")
+    return val
+parser.add_argument("--size", "-s", help="specify file size", type=check_positive, default=0)
+parser.add_argument("--mail", "-m", help="send mail", nargs='+')
+parser.add_argument("--delete", "-del", help="delete previous day's files", action='store_true')
+args = parser.parse_args()
+
+browser = args.browser
+pathToDirectory = args.directory
+size = args.size
+recipientAddress = args.mail
+
+if pathToDirectory == 'desktop':
+    pathToDirectory = path.join(environ['USERPROFILE'], 'Desktop')
+elif pathToDirectory == 'documents':
+    pathToDirectory = path.join(environ['USERPROFILE'], 'Documents')
+elif pathToDirectory == 'downloads':
+    pathToDirectory = path.join(environ['USERPROFILE'], 'Downloads')
+elif not path.isdir(pathToDirectory):
+    print('Folder/path does not exist')
+
+if args.delete:
+    dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
+    yesterdayFilePath = Path(pathToDirectory)
+    yesterdayFileList = list(yesterdayFilePath.glob('Prajavani part ? ' + dateYesterday + '.pdf'))
+
+    for file in yesterdayFileList:
+        if(path.isfile(file)):
+            remove(file)
 
 dateToday = date.today().strftime("%d-%m-%Y")
-dateYesterday = (date.today() - timedelta(days = 1)).strftime("%d-%m-%Y")
-
-yesterdayFilePath = Path(pathToDirectory)
-yesterdayFileList = list(yesterdayFilePath.glob('Prajavani part ? ' + dateYesterday + '.pdf'))
-
-for file in yesterdayFileList:
-    if(path.isfile(file)):
-        remove(file)
 
 try:
     if (browser.lower() == 'c'):
@@ -93,13 +96,14 @@ try:
         right_page.click()
 
     pattern = re.compile(r'epaper.prajavani.net')
-    def check_ad(function):
-        function
-        website = pattern.findall(driver.current_url)
-        while not website:
-            driver.close()
-            function
+    def check_ad():
+        while True:
+            driver.switch_to.window(driver.window_handles[1])
             website = pattern.findall(driver.current_url)
+            if website:
+                return True
+            else:
+                driver.close()
 
     # First and last page are shown up individually.
     def open_first_and_last_page():
@@ -107,7 +111,7 @@ try:
             thumbnail_container_width = driver.find_element_by_xpath('//*[@id="leftPageThumb"]/div/div[3]').size.get(
                 'width')
             if thumbnail_container_width > 77:
-                check_ad(click_open_left_page())
+                click_open_left_page()
                 driver.switch_to.window(driver.window_handles[0])
                 click_close_button()
                 break
@@ -127,7 +131,7 @@ try:
                 break
 
 
-    # Checking if the menu toolbar has loaded.
+    # Checking if the menu toolbar has loaded and selecting Uttara Kannada version of newspaper.
     while True:
         menuWidthCheck = int(driver.find_element_by_xpath('//*[@id="mainmenu"]/div').size.get('width'))
         if menuWidthCheck == 438:
@@ -151,7 +155,7 @@ try:
 
     # Loop to load all the middle pages.
     for i in range(int(ceil(noOfPages - 2) / 2)):
-        check_ad(click_next_button())
+        click_next_button()
         click_download_button()
         check_size_and_width_middle_pages()
 
@@ -162,13 +166,13 @@ try:
         open_first_and_last_page()
 
     total_file_size = 0
-    page_no = 1
+    pages_downloaded = 0
     folderNo = 1
 
     folderPath = pathToDirectory + '/Prajavani part ' + str(folderNo) + ' ' + dateToday #  Initial folder path with today's date.
     makedirs(folderPath)  # Make that folder.
 
-    while(page_no <= noOfPages):
+    while (len(driver.window_handles) > 1):
 
         if (size != 0 and total_file_size > (size * 1000000)):
             total_file_size = 0
@@ -176,24 +180,26 @@ try:
             folderPath = pathToDirectory + '/Prajavani part ' + str(folderNo) + ' ' + dateToday
             makedirs(folderPath)
 
-        print('Downloading page ' + str(page_no))
-        driver.switch_to.window(driver.window_handles[page_no])
-        res = requests.get(driver.current_url)
-        res.raise_for_status()
-        file_size = int(res.headers.get('Content-Length', None))
-        total_file_size += file_size
-        filePath = open(path.join(folderPath, str(page_no) + '.pdf'), 'wb')
-        for chunk in res.iter_content(100000):
-            filePath.write(chunk)
-        filePath.close()
-        page_no += 1
+        if check_ad():
+            driver.switch_to.window(driver.window_handles[1])
+            print('Downloading page ' + str(pages_downloaded + 1))
+            res = requests.get(driver.current_url)
+            res.raise_for_status()
+            file_size = int(res.headers.get('Content-Length', None))
+            total_file_size += file_size
+            filePath = open(path.join(folderPath, str(pages_downloaded + 1) + '.pdf'), 'wb')
+            for chunk in res.iter_content(100000):
+                filePath.write(chunk)
+            filePath.close()
+            driver.close()
+            pages_downloaded += 1
 
     driver.quit()  # Close browser.
 
     for i in range(folderNo):
         merge_pdf_in_folder((pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday), pathToDirectory, 'Prajavani part ' + str(i + 1) + ' ' + dateToday)
         rmtree(pathToDirectory + '/Prajavani part ' + str(i + 1) + ' ' + dateToday)
-        if (sendMail == 1):
+        if recipientAddress:
             send_email_pdf(recipientAddress, [pathToDirectory + '/Prajavani part '+ str(i + 1) + dateToday + '.pdf'],
                     subject='Prajavani Newspaper part ' + str(i + 1) + dateToday)
 
