@@ -38,7 +38,7 @@ This project has multiple modules written in Python which can serve different pu
 <br/><br/>![About version](../assets/newspaper-scraper/edge-webdriver-download-delay-10ms.gif)
 ![Download dialog](../assets/newspaper-scraper/download-dialog.png)
 2. In the zip, there will be a `msedgedriver.exe` file.`chromedriver.exe` for Chrome.<br/><br/>![zip folder](../assets/newspaper-scraper/zip-folder.png)
-3. Extract this to the folder of your choice.
+3. **Important:** Extract this to the folder where you've downloaded the scripts (by default it will be Newspaper-Scraper).
 ### Usage
 `py prajavani-dl.py [browser] [directory-location] [file-size] [send-mail] [recipient-email-address 1] [recipient-email-address 2] [recipient-email-address n]`
 <br/>Example: `py prajavani-dl.py c desktop 8 1 abc@mail.com def@mail.com`<br/>
