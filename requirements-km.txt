@@ -1,4 +1,4 @@
-lxml==4.4.3
+lxml==4.6.2
 PyPDF2==1.26.0
 requests==2.24.0
 img2pdf~=0.3.6
