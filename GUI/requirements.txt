@@ -12,7 +12,7 @@ lxml==4.5.2
 mccabe==0.6.1
 natsort==7.0.1
 pikepdf==1.17.3
-Pillow==7.2.0
+Pillow==9.0.0
 pylint==2.5.3
 PyPDF2==1.26.0
 PyQt5==5.15.0
