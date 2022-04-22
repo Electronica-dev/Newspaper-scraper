@@ -1,5 +1,5 @@
 lxml==4.4.3
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 requests==2.24.0
 img2pdf~=0.3.6
 beautifulsoup4==4.9.1
