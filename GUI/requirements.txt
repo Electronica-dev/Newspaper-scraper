@@ -14,7 +14,7 @@ natsort==7.0.1
 pikepdf==1.17.3
 Pillow==7.2.0
 pylint==2.5.3
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 PyQt5==5.15.0
 PyQt5-sip==12.8.0
 requests==2.24.0
