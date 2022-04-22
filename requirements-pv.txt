@@ -1,4 +1,4 @@
 natsort==7.0.1
-PyPDF2==1.26.0
+PyPDF2==1.27.5
 requests==2.24.0
 selenium==3.141.0
